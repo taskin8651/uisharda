@@ -1,112 +1,440 @@
-@extends('layouts.app')
+@extends('frontend.master')
+
 @section('content')
 
-<div class="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+<style>
+    :root{
+        --brand:#1e3a8a;
+        --brand2:#0ea5e9;
+        --ink:#0f172a;
+        --muted:#64748b;
+        --soft:#f5f7ff;
+        --soft2:#f8fafc;
+    }
 
-    <div class="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-sm">
+    .auth-premium{
+        min-height:100vh;
+        position:relative;
+        display:grid;
+        place-items:center;
+        padding:40px 16px;
+        overflow:hidden;
+        background:
+            radial-gradient(1200px 700px at 12% 10%, rgba(30,58,138,.20), transparent 60%),
+            radial-gradient(900px 600px at 88% 25%, rgba(14,165,233,.20), transparent 55%),
+            linear-gradient(180deg,#ffffff,#f8fafc);
+    }
 
-        {{-- HEADER --}}
-        <div class="px-8 pt-8 pb-4 text-center">
-            <h1 class="text-2xl font-semibold text-gray-900">
-                {{ trans('panel.site_title') }}
-            </h1>
-            <p class="text-sm text-gray-500 mt-1">
+    .auth-bg-grid{
+        position:absolute;
+        inset:0;
+        background-image:
+            linear-gradient(to right, rgba(15,23,42,.06) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(15,23,42,.06) 1px, transparent 1px);
+        background-size:60px 60px;
+        opacity:.25;
+        pointer-events:none;
+    }
+
+    .auth-orb{
+        position:absolute;
+        width:520px;
+        height:520px;
+        border-radius:50%;
+        filter:blur(42px);
+        opacity:.35;
+        pointer-events:none;
+    }
+
+    .auth-orb-1{
+        left:-180px;
+        top:-160px;
+        background:rgba(30,58,138,.65);
+    }
+
+    .auth-orb-2{
+        right:-220px;
+        bottom:-160px;
+        background:rgba(14,165,233,.65);
+    }
+
+    .auth-card{
+        width:100%;
+        max-width:480px;
+        position:relative;
+        z-index:2;
+        border-radius:26px;
+        background:rgba(255,255,255,.78);
+        border:1px solid rgba(15,23,42,.10);
+        box-shadow:
+            0 22px 70px rgba(15,23,42,.12),
+            0 1px 0 rgba(255,255,255,.7) inset;
+        backdrop-filter:blur(14px);
+        -webkit-backdrop-filter:blur(14px);
+        overflow:hidden;
+    }
+
+    .auth-card::before{
+        content:"";
+        position:absolute;
+        inset:-40% -20%;
+        background:linear-gradient(110deg, transparent 0%, rgba(255,255,255,.55) 35%, transparent 70%);
+        transform:translateX(-55%);
+        animation:authShimmer 2.6s ease-in-out infinite;
+        pointer-events:none;
+    }
+
+    @keyframes authShimmer{
+        0%{ transform:translateX(-55%); opacity:0; }
+        25%{ opacity:.22; }
+        100%{ transform:translateX(55%); opacity:0; }
+    }
+
+    .auth-card-inner{
+        position:relative;
+        z-index:3;
+        padding:34px 34px 30px;
+    }
+
+    .auth-logo-wrap{
+        display:flex;
+        justify-content:center;
+        margin-bottom:14px;
+    }
+
+    .auth-logo-box{
+        width:86px;
+        height:86px;
+        border-radius:24px;
+        display:grid;
+        place-items:center;
+        background:rgba(255,255,255,.72);
+        border:1px solid rgba(2,6,23,.08);
+        box-shadow:0 14px 30px rgba(2,6,23,.08);
+    }
+
+    .auth-logo{
+        max-width:68px;
+        max-height:68px;
+        object-fit:contain;
+    }
+
+    .auth-badge{
+        display:inline-flex;
+        align-items:center;
+        gap:9px;
+        padding:9px 13px;
+        border-radius:999px;
+        border:1px solid rgba(30,58,138,.18);
+        background:rgba(255,255,255,.55);
+        color:rgba(15,23,42,.86);
+        font-weight:800;
+        font-size:12px;
+        letter-spacing:.06em;
+        text-transform:uppercase;
+        box-shadow:0 10px 26px rgba(2,6,23,.06);
+    }
+
+    .auth-badge i{
+        color:var(--brand);
+    }
+
+    .auth-title{
+        margin:18px 0 6px;
+        font-size:30px;
+        font-weight:900;
+        line-height:1.1;
+        letter-spacing:-.03em;
+        color:var(--ink);
+        text-align:center;
+    }
+
+    .auth-title span{
+        display:block;
+        background:linear-gradient(135deg, rgba(30,58,138,1), rgba(14,165,233,1));
+        -webkit-background-clip:text;
+        background-clip:text;
+        color:transparent;
+    }
+
+    .auth-subtitle{
+        text-align:center;
+        color:var(--muted);
+        font-size:14px;
+        margin-bottom:24px;
+    }
+
+    .auth-field{
+        margin-bottom:16px;
+    }
+
+    .auth-label{
+        display:block;
+        font-size:13px;
+        font-weight:800;
+        color:rgba(15,23,42,.82);
+        margin-bottom:8px;
+    }
+
+    .auth-input-icon{
+        position:relative;
+    }
+
+    .auth-input-icon i{
+        position:absolute;
+        left:14px;
+        top:50%;
+        transform:translateY(-50%);
+        color:rgba(100,116,139,1);
+        font-size:15px;
+    }
+
+    .auth-input{
+        width:100%;
+        height:50px;
+        border-radius:16px;
+        border:1px solid rgba(2,6,23,.10);
+        background:rgba(255,255,255,.74);
+        padding:0 14px 0 42px;
+        color:var(--ink);
+        font-size:14px;
+        font-weight:600;
+        outline:none;
+        transition:box-shadow .2s ease, border-color .2s ease, background .2s ease;
+    }
+
+    .auth-input:focus{
+        background:rgba(255,255,255,.92);
+        box-shadow:0 0 0 .25rem rgba(14,165,233,.18);
+        border-color:rgba(14,165,233,.40);
+    }
+
+    .auth-input.is-invalid{
+        border-color:rgba(220,38,38,.65);
+        box-shadow:0 0 0 .20rem rgba(220,38,38,.10);
+    }
+
+    .auth-error{
+        margin-top:7px;
+        color:#dc2626;
+        font-size:12px;
+        font-weight:700;
+    }
+
+    .auth-submit{
+        width:100%;
+        border:0;
+        height:52px;
+        border-radius:999px;
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:9px;
+        color:#fff;
+        font-weight:900;
+        font-size:15px;
+        background:linear-gradient(135deg, rgba(30,58,138,1) 0%, rgba(14,165,233,1) 100%);
+        box-shadow:0 14px 28px rgba(14,165,233,.22);
+        transition:transform .2s ease, box-shadow .2s ease;
+        cursor:pointer;
+    }
+
+    .auth-submit:hover{
+        transform:translateY(-2px);
+        box-shadow:0 18px 34px rgba(14,165,233,.28);
+    }
+
+    .auth-footer{
+        margin-top:20px;
+        text-align:center;
+        font-size:14px;
+        color:var(--muted);
+        font-weight:600;
+    }
+
+    .auth-footer a{
+        color:var(--brand);
+        font-weight:900;
+        text-decoration:none;
+    }
+
+    .auth-footer a:hover{
+        color:var(--brand2);
+        text-decoration:underline;
+    }
+
+    .auth-secure{
+        margin-top:18px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        padding:11px 12px;
+        border-radius:18px;
+        background:rgba(255,255,255,.65);
+        border:1px solid rgba(2,6,23,.08);
+        color:rgba(15,23,42,.70);
+        font-size:12px;
+        font-weight:800;
+    }
+
+    .auth-secure i{
+        color:#22c55e;
+    }
+
+    @media(max-width:575.98px){
+        .auth-card-inner{
+            padding:28px 22px 24px;
+        }
+
+        .auth-title{
+            font-size:26px;
+        }
+    }
+</style>
+
+<div class="auth-premium">
+    <div class="auth-bg-grid"></div>
+    <div class="auth-orb auth-orb-1"></div>
+    <div class="auth-orb auth-orb-2"></div>
+
+    <div class="auth-card">
+        <div class="auth-card-inner">
+
+            <div class="auth-logo-wrap">
+                <div class="auth-logo-box">
+                    <img src="{{ asset('assets/img/logo.png') }}"
+                         alt="{{ trans('panel.site_title') }}"
+                         class="auth-logo">
+                </div>
+            </div>
+
+            <div class="text-center">
+                <div class="auth-badge">
+                    <i class="bi bi-person-plus"></i>
+                    Create Account
+                </div>
+            </div>
+
+            <h1 class="auth-title">
                 {{ trans('global.register') }}
+                <span>{{ trans('panel.site_title') }}</span>
+            </h1>
+
+            <p class="auth-subtitle">
+                Create your admin account to access and manage the panel.
             </p>
-        </div>
 
-        {{-- FORM --}}
-        <form method="POST" action="{{ route('register') }}" class="px-8 pb-8 space-y-5">
-            @csrf
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
 
-            {{-- NAME --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    {{ trans('global.user_name') }}
-                </label>
-                <input type="text"
-                       name="name"
-                       value="{{ old('name') }}"
-                       required
-                       autofocus
-                       class="w-full px-3 py-2 border rounded-md text-sm
-                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                              {{ $errors->has('name') ? 'border-red-500' : 'border-gray-300' }}">
-                @if($errors->has('name'))
-                    <p class="mt-1 text-xs text-red-600">
-                        {{ $errors->first('name') }}
-                    </p>
-                @endif
-            </div>
+                {{-- NAME --}}
+                <div class="auth-field">
+                    <label class="auth-label">
+                        {{ trans('global.user_name') }}
+                    </label>
 
-            {{-- EMAIL --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    {{ trans('global.login_email') }}
-                </label>
-                <input type="email"
-                       name="email"
-                       value="{{ old('email') }}"
-                       required
-                       class="w-full px-3 py-2 border rounded-md text-sm
-                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                              {{ $errors->has('email') ? 'border-red-500' : 'border-gray-300' }}">
-                @if($errors->has('email'))
-                    <p class="mt-1 text-xs text-red-600">
-                        {{ $errors->first('email') }}
-                    </p>
-                @endif
-            </div>
+                    <div class="auth-input-icon">
+                        <i class="bi bi-person"></i>
+                        <input type="text"
+                               name="name"
+                               value="{{ old('name') }}"
+                               required
+                               autofocus
+                               placeholder="Enter your full name"
+                               class="auth-input {{ $errors->has('name') ? 'is-invalid' : '' }}">
+                    </div>
 
-            {{-- PASSWORD --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    {{ trans('global.login_password') }}
-                </label>
-                <input type="password"
-                       name="password"
-                       required
-                       class="w-full px-3 py-2 border rounded-md text-sm
-                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                              {{ $errors->has('password') ? 'border-red-500' : 'border-gray-300' }}">
-                @if($errors->has('password'))
-                    <p class="mt-1 text-xs text-red-600">
-                        {{ $errors->first('password') }}
-                    </p>
-                @endif
-            </div>
+                    @if($errors->has('name'))
+                        <div class="auth-error">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
+                </div>
 
-            {{-- CONFIRM PASSWORD --}}
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">
-                    {{ trans('global.login_password_confirmation') }}
-                </label>
-                <input type="password"
-                       name="password_confirmation"
-                       required
-                       class="w-full px-3 py-2 border rounded-md text-sm
-                              focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                              border-gray-300">
-            </div>
+                {{-- EMAIL --}}
+                <div class="auth-field">
+                    <label class="auth-label">
+                        {{ trans('global.login_email') }}
+                    </label>
 
-            {{-- ACTION --}}
-            <div class="pt-2">
-                <button type="submit"
-                        class="w-full py-2.5 bg-blue-600 text-white text-sm font-medium
-                               rounded-md hover:bg-blue-700 transition">
+                    <div class="auth-input-icon">
+                        <i class="bi bi-envelope"></i>
+                        <input type="email"
+                               name="email"
+                               value="{{ old('email') }}"
+                               required
+                               placeholder="Enter your email"
+                               class="auth-input {{ $errors->has('email') ? 'is-invalid' : '' }}">
+                    </div>
+
+                    @if($errors->has('email'))
+                        <div class="auth-error">
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
+                </div>
+
+                {{-- PASSWORD --}}
+                <div class="auth-field">
+                    <label class="auth-label">
+                        {{ trans('global.login_password') }}
+                    </label>
+
+                    <div class="auth-input-icon">
+                        <i class="bi bi-lock"></i>
+                        <input type="password"
+                               name="password"
+                               required
+                               placeholder="Create password"
+                               class="auth-input {{ $errors->has('password') ? 'is-invalid' : '' }}">
+                    </div>
+
+                    @if($errors->has('password'))
+                        <div class="auth-error">
+                            {{ $errors->first('password') }}
+                        </div>
+                    @endif
+                </div>
+
+                {{-- CONFIRM PASSWORD --}}
+                <div class="auth-field">
+                    <label class="auth-label">
+                        {{ trans('global.login_password_confirmation') }}
+                    </label>
+
+                    <div class="auth-input-icon">
+                        <i class="bi bi-shield-lock"></i>
+                        <input type="password"
+                               name="password_confirmation"
+                               required
+                               placeholder="Confirm password"
+                               class="auth-input">
+                    </div>
+                </div>
+
+                {{-- ACTION --}}
+                <button type="submit" class="auth-submit">
+                    <i class="bi bi-person-check"></i>
                     {{ trans('global.register') }}
                 </button>
-            </div>
 
-            {{-- LOGIN LINK --}}
-            <div class="text-center pt-2">
-                <a href="{{ route('login') }}"
-                   class="text-sm text-blue-600 hover:underline">
-                    Already have an account? Login
-                </a>
-            </div>
+                {{-- LOGIN LINK --}}
+                <div class="auth-footer">
+                    Already have an account?
+                    <a href="{{ route('login') }}">
+                        Login
+                    </a>
+                </div>
 
-        </form>
+                <div class="auth-secure">
+                    <i class="bi bi-lock"></i>
+                    Secure admin registration
+                </div>
+
+            </form>
+
+        </div>
     </div>
 </div>
 
