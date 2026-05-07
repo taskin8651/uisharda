@@ -1,8 +1,6 @@
-
 @extends('frontend.master')
 
 @section('content')
-
 
 <!-- PAGE HERO -->
 <header class="hero hero-premium" style="padding: 90px 0 55px;">
@@ -12,6 +10,7 @@
 
   <div class="container position-relative">
     <div class="row g-4 align-items-center">
+
       <div class="col-lg-8">
         <div class="hero-badge mb-3">
           <i class="bi bi-chat-dots"></i>
@@ -31,7 +30,9 @@
 
         <nav aria-label="breadcrumb" class="mt-4">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="index.html#home" class="text-decoration-none">Home</a></li>
+            <li class="breadcrumb-item">
+              <a href="{{ url('/') }}" class="text-decoration-none">Home</a>
+            </li>
             <li class="breadcrumb-item active" aria-current="page">Contact</li>
           </ol>
         </nav>
@@ -43,21 +44,31 @@
           <div class="small text-muted-2">Call, WhatsApp or email</div>
 
           <div class="d-grid gap-2 mt-3">
-            <a class="btn btn-hero-primary btn-lg" href="tel:+91XXXXXXXXXX">
-              <i class="bi bi-telephone"></i> Call Now
-            </a>
-            <a class="btn btn-hero-secondary btn-lg" href="#">
-              <i class="bi bi-whatsapp"></i> WhatsApp
-            </a>
-            <a class="btn btn-hero-secondary btn-lg" href="mailto:info@shardaplacement.in">
-              <i class="bi bi-envelope"></i> Email
-            </a>
+            @if($websiteSetting->phone)
+              <a class="btn btn-hero-primary btn-lg" href="{{ $websiteSetting->phone_link }}">
+                <i class="bi bi-telephone"></i> Call Now
+              </a>
+            @endif
+
+            @if($websiteSetting->whatsapp_link && $websiteSetting->whatsapp_link !== '#')
+              <a class="btn btn-hero-secondary btn-lg" href="{{ $websiteSetting->whatsapp_link }}" target="_blank">
+                <i class="bi bi-whatsapp"></i> WhatsApp
+              </a>
+            @endif
+
+            @if($websiteSetting->email)
+              <a class="btn btn-hero-secondary btn-lg" href="{{ $websiteSetting->email_link }}">
+                <i class="bi bi-envelope"></i> Email
+              </a>
+            @endif
           </div>
 
-          <div class="p-3 bg-soft rounded-4 mt-3">
-            <div class="fw-semibold">Office Hours</div>
-            <div class="small text-muted-2">Mon–Sat • 10:00 AM – 7:00 PM</div>
-          </div>
+          @if($websiteSetting->office_hours)
+            <div class="p-3 bg-soft rounded-4 mt-3">
+              <div class="fw-semibold">Office Hours</div>
+              <div class="small text-muted-2">{{ $websiteSetting->office_hours }}</div>
+            </div>
+          @endif
         </div>
       </div>
 
@@ -78,68 +89,96 @@
         </div>
 
         <h2 class="fw-bold mb-2">We’re here to help</h2>
+
         <p class="text-muted-2 mb-4">
-          For hiring: share role, headcount, location and joining timeline. For job apply: share your details and resume (optional).
+          For hiring: share role, headcount, location and joining timeline.
+          For job apply: share your details and resume optional.
         </p>
 
         <div class="contact-cards d-grid gap-3">
-          <div class="contact-info-card">
-            <div class="contact-info-icon"><i class="bi bi-geo-alt"></i></div>
-            <div>
-              <div class="fw-semibold">Office Address</div>
-              <div class="small text-muted-2">F-17, 1st floor, Pushpanjali Complex, Boring Road, Patna, Bihar - 800004 (Add full address)</div>
-            </div>
-          </div>
 
-          <div class="contact-info-card">
-            <div class="contact-info-icon"><i class="bi bi-telephone"></i></div>
-            <div>
-              <div class="fw-semibold">Phone</div>
-              <div class="small text-muted-2">+91 99390 10504</div>
+          @if($websiteSetting->address)
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <div>
+                <div class="fw-semibold">Office Address</div>
+                <div class="small text-muted-2">{{ $websiteSetting->address }}</div>
+              </div>
             </div>
-          </div>
+          @endif
 
-          <div class="contact-info-card">
-            <div class="contact-info-icon"><i class="bi bi-envelope"></i></div>
-            <div>
-              <div class="fw-semibold">Email</div>
-              <div class="small text-muted-2">info@shardaplacement.in</div>
+          @if($websiteSetting->phone)
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <i class="bi bi-telephone"></i>
+              </div>
+              <div>
+                <div class="fw-semibold">Phone</div>
+                <div class="small text-muted-2">{{ $websiteSetting->phone }}</div>
+              </div>
             </div>
-          </div>
+          @endif
+
+          @if($websiteSetting->email)
+            <div class="contact-info-card">
+              <div class="contact-info-icon">
+                <i class="bi bi-envelope"></i>
+              </div>
+              <div>
+                <div class="fw-semibold">Email</div>
+                <div class="small text-muted-2">{{ $websiteSetting->email }}</div>
+              </div>
+            </div>
+          @endif
+
         </div>
 
         <div class="contact-actions mt-4">
-          <a class="contact-action-btn" href="tel:+91XXXXXXXXXX">
-            <i class="bi bi-telephone"></i> Call
-          </a>
-          <a class="contact-action-btn" href="#">
-            <i class="bi bi-whatsapp"></i> WhatsApp
-          </a>
-          <a class="contact-action-btn" href="mailto:info@shardaplacement.in">
-            <i class="bi bi-envelope"></i> Email
-          </a>
+          @if($websiteSetting->phone)
+            <a class="contact-action-btn" href="{{ $websiteSetting->phone_link }}">
+              <i class="bi bi-telephone"></i> Call
+            </a>
+          @endif
+
+          @if($websiteSetting->whatsapp_link && $websiteSetting->whatsapp_link !== '#')
+            <a class="contact-action-btn" href="{{ $websiteSetting->whatsapp_link }}" target="_blank">
+              <i class="bi bi-whatsapp"></i> WhatsApp
+            </a>
+          @endif
+
+          @if($websiteSetting->email)
+            <a class="contact-action-btn" href="{{ $websiteSetting->email_link }}">
+              <i class="bi bi-envelope"></i> Email
+            </a>
+          @endif
         </div>
 
-        <!-- Map placeholder -->
-        <div class="contact-map mt-4">
-          <div class="contact-map-badge">
-            <i class="bi bi-pin-map"></i> Map (Optional)
+        <!-- Map -->
+        @if($websiteSetting->google_map_embed)
+          <div class="contact-map mt-4">
+            {!! $websiteSetting->google_map_embed !!}
           </div>
-          <div class="contact-map-body">
-            <div class="text-muted-2 small">
-              Add Google Map embed here later.
-              <div class="mt-2 small">
-                Example: replace this box with an <code>&lt;iframe&gt;</code> map embed.
+        @else
+          <div class="contact-map mt-4">
+            <div class="contact-map-badge">
+              <i class="bi bi-pin-map"></i> Map
+            </div>
+            <div class="contact-map-body">
+              <div class="text-muted-2 small">
+                Google Map not added yet.
               </div>
             </div>
           </div>
-        </div>
+        @endif
 
         <!-- FAQ -->
         <div class="mt-4">
           <div class="fw-bold fs-5 mb-2">Quick FAQs</div>
 
           <div class="accordion" id="faqContact">
+
             <div class="accordion-item">
               <h2 class="accordion-header" id="q1">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
@@ -161,7 +200,7 @@
               </h2>
               <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqContact">
                 <div class="accordion-body text-muted-2">
-                  Role name, headcount, location, salary range (optional) and joining timeline.
+                  Role name, headcount, location, salary range optional and joining timeline.
                 </div>
               </div>
             </div>
@@ -178,6 +217,7 @@
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -190,86 +230,159 @@
           <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
             <div>
               <div class="fw-bold fs-4 mb-1">Send Your Details</div>
-              <div class="text-muted-2">Form UI only (backend integration later)</div>
+              <div class="text-muted-2">Submit your requirement or job application</div>
             </div>
+
             <span class="badge contact-form-badge">
               <i class="bi bi-shield-check"></i> Secure
             </span>
           </div>
 
-          <form class="row g-3 mt-3">
+          <form method="POST"
+                action="{{ route('frontend.contact.store') }}"
+                enctype="multipart/form-data"
+                class="row g-3 mt-3">
+            @csrf
+
+            @if(session('success'))
+              <div class="col-12">
+                <div class="alert alert-success rounded-4 mb-0">
+                  {{ session('success') }}
+                </div>
+              </div>
+            @endif
+
+            @if($errors->any())
+              <div class="col-12">
+                <div class="alert alert-danger rounded-4 mb-0">
+                  Please check required fields and try again.
+                </div>
+              </div>
+            @endif
+
             <div class="col-md-6">
-              <label class="form-label">Full Name</label>
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
               <div class="input-icon">
                 <i class="bi bi-person"></i>
-                <input class="form-control form-control-lg" placeholder="Enter your name">
+                <input name="full_name"
+                       value="{{ old('full_name') }}"
+                       class="form-control form-control-lg @error('full_name') is-invalid @enderror"
+                       placeholder="Enter your name"
+                       required>
               </div>
+              @error('full_name')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Mobile Number</label>
+              <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
               <div class="input-icon">
                 <i class="bi bi-telephone"></i>
-                <input class="form-control form-control-lg" placeholder="Enter mobile number">
+                <input name="mobile_number"
+                       value="{{ old('mobile_number') }}"
+                       class="form-control form-control-lg @error('mobile_number') is-invalid @enderror"
+                       placeholder="Enter mobile number"
+                       required>
               </div>
+              @error('mobile_number')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Email</label>
               <div class="input-icon">
                 <i class="bi bi-envelope"></i>
-                <input class="form-control form-control-lg" type="email" placeholder="Enter email">
+                <input name="email"
+                       value="{{ old('email') }}"
+                       class="form-control form-control-lg @error('email') is-invalid @enderror"
+                       type="email"
+                       placeholder="Enter email">
               </div>
+              @error('email')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">You are a</label>
-              <select class="form-select form-select-lg">
-                <option selected>Select</option>
-                <option>Candidate (Job Apply)</option>
-                <option>Company (Requirement)</option>
+              <label class="form-label">You are a <span class="text-danger">*</span></label>
+              <select name="user_type"
+                      class="form-select form-select-lg @error('user_type') is-invalid @enderror"
+                      required>
+                <option value="">Select</option>
+                <option value="Candidate (Job Apply)" {{ old('user_type') == 'Candidate (Job Apply)' ? 'selected' : '' }}>
+                  Candidate (Job Apply)
+                </option>
+                <option value="Company (Requirement)" {{ old('user_type') == 'Company (Requirement)' ? 'selected' : '' }}>
+                  Company (Requirement)
+                </option>
               </select>
+              @error('user_type')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Preferred Location (Optional)</label>
+              <label class="form-label">Preferred Location</label>
               <div class="input-icon">
                 <i class="bi bi-geo-alt"></i>
-                <input class="form-control form-control-lg" placeholder="e.g., Noida / Delhi / Gurgaon">
+                <input name="preferred_location"
+                       value="{{ old('preferred_location') }}"
+                       class="form-control form-control-lg"
+                       placeholder="e.g., Patna / Noida / Delhi">
               </div>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Industry (Optional)</label>
-              <select class="form-select form-select-lg">
-                <option selected>Select industry</option>
-                <option>Manufacturing</option>
-                <option>Warehouse</option>
-                <option>Logistics</option>
-                <option>Security</option>
-                <option>Hospitality</option>
-                <option>Healthcare</option>
-                <option>Retail</option>
-                <option>Corporate/Office</option>
+              <label class="form-label">Industry</label>
+              <select name="industry" class="form-select form-select-lg">
+                <option value="">Select industry</option>
+
+                @isset($industries)
+                  @foreach($industries as $industry)
+                    <option value="{{ $industry->title }}" {{ old('industry') == $industry->title ? 'selected' : '' }}>
+                      {{ $industry->title }}
+                    </option>
+                  @endforeach
+                @endisset
               </select>
             </div>
 
             <div class="col-12">
-              <label class="form-label">Message / Requirement</label>
-              <textarea class="form-control form-control-lg" rows="5" placeholder="Write your message"></textarea>
+              <label class="form-label">Message / Requirement <span class="text-danger">*</span></label>
+              <textarea name="message"
+                        class="form-control form-control-lg @error('message') is-invalid @enderror"
+                        rows="5"
+                        placeholder="Write your message"
+                        required>{{ old('message') }}</textarea>
+
               <div class="form-text">
-                Employers: role + headcount + location + joining timeline. Candidates: role interested + experience + location.
+                Employers: role + headcount + location + joining timeline.
+                Candidates: role interested + experience + location.
               </div>
+
+              @error('message')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-12">
-              <label class="form-label">Upload Resume (Optional)</label>
-              <input class="form-control form-control-lg" type="file">
-              <div class="form-text">PDF/DOC resume upload placeholder.</div>
+              <label class="form-label">Upload Resume</label>
+              <input name="resume"
+                     class="form-control form-control-lg @error('resume') is-invalid @enderror"
+                     type="file"
+                     accept=".pdf,.doc,.docx">
+
+              <div class="form-text">PDF/DOC/DOCX only. Max size 4MB.</div>
+
+              @error('resume')
+                <div class="text-danger small mt-1">{{ $message }}</div>
+              @enderror
             </div>
 
             <div class="col-12 d-grid mt-2">
-              <button type="button" class="btn btn-hero-primary btn-lg">
+              <button type="submit" class="btn btn-hero-primary btn-lg">
                 <i class="bi bi-send"></i> Submit
               </button>
             </div>
@@ -298,6 +411,7 @@
         </div>
 
       </div>
+
     </div>
   </div>
 </section>
@@ -307,6 +421,7 @@
   <div class="container">
     <div class="trust-strip-inner">
       <div class="row align-items-center g-3">
+
         <div class="col-lg-8">
           <div class="trust-title">
             <span class="trust-icon"><i class="bi bi-stars"></i></span>
@@ -316,18 +431,19 @@
             Share your requirement — we’ll coordinate shortlisting and interviews quickly.
           </div>
         </div>
+
         <div class="col-lg-4 text-lg-end">
-          <a href="services.html" class="btn btn-hero-secondary btn-lg">
+          <a href="{{ url('/services') }}" class="btn btn-hero-secondary btn-lg">
             <i class="bi bi-layers"></i> Services
           </a>
-          <a href="jobs.html" class="btn btn-hero-primary btn-lg ms-2">
+          <a href="{{ url('/jobs') }}" class="btn btn-hero-primary btn-lg ms-2">
             <i class="bi bi-search"></i> Browse Jobs
           </a>
         </div>
+
       </div>
     </div>
   </div>
 </section>
-
 
 @endsection
