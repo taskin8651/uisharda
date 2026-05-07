@@ -63,6 +63,13 @@ Route::resource('industry-roles', 'IndustryRoleController', ['except' => ['show'
 Route::resource('industry-processes', 'IndustryProcessController', ['except' => ['show']]);
 
     
+// Services CMS
+Route::get('service-page', 'ServicePageController@edit')->name('service-page.edit');
+Route::put('service-page', 'ServicePageController@update')->name('service-page.update');
+
+Route::resource('services', 'ServiceController', ['except' => ['show']]);
+Route::resource('service-feature-points', 'ServiceFeaturePointController', ['except' => ['show']]);
+Route::resource('service-processes', 'ServiceProcessController', ['except' => ['show']]);
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
@@ -76,5 +83,6 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 // Frontend Routes
 Route::get('/about', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('frontend.about');
-Route::get('/industries', [App\Http\Controllers\Frontend\IndustryController::class, 'index'])->name('frontend.industries');    
+Route::get('/industries', [App\Http\Controllers\Frontend\IndustryController::class, 'index'])->name('frontend.industries');
+Route::get('/services', [App\Http\Controllers\Frontend\ServiceController::class, 'index'])->name('frontend.services');    
 

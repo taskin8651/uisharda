@@ -257,6 +257,76 @@
     </div>
 @endcan
 
+{{-- SERVICES CMS GROUP --}}
+@can('service_page_access')
+    @php
+        $serviceActive = request()->is('admin/service-page*')
+            || request()->is('admin/services*')
+            || request()->is('admin/service-feature-points*')
+            || request()->is('admin/service-processes*');
+    @endphp
+
+    <div x-data="{ open: {{ $serviceActive ? 'true' : 'false' }} }">
+
+        <button type="button"
+                @click="open = !open"
+                data-tooltip="Services CMS"
+                class="nav-link nav-group-btn {{ $serviceActive ? 'active' : '' }}">
+
+            <div class="nav-group-left">
+                <i class="fas fa-layer-group nav-icon"></i>
+                <span class="nav-label">Services CMS</span>
+            </div>
+
+            <i class="fas fa-chevron-right chevron"
+               :style="open ? 'transform:rotate(90deg)' : ''"></i>
+        </button>
+
+        <div class="submenu"
+             x-show="open"
+             x-transition:enter="transition ease-out duration-150"
+             x-transition:enter-start="opacity-0 -translate-y-1"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-1">
+
+            @can('service_page_edit')
+                <a href="{{ route('admin.service-page.edit') }}"
+                   class="sub-link {{ request()->is('admin/service-page*') ? 'active' : '' }}">
+                    <i class="fas fa-file-alt"></i>
+                    Main Service Page
+                </a>
+            @endcan
+
+            @can('service_access')
+                <a href="{{ route('admin.services.index') }}"
+                   class="sub-link {{ request()->is('admin/services*') ? 'active' : '' }}">
+                    <i class="fas fa-th-large"></i>
+                    Services
+                </a>
+            @endcan
+
+            @can('service_feature_point_access')
+                <a href="{{ route('admin.service-feature-points.index') }}"
+                   class="sub-link {{ request()->is('admin/service-feature-points*') ? 'active' : '' }}">
+                    <i class="fas fa-check-circle"></i>
+                    Featured Points
+                </a>
+            @endcan
+
+            @can('service_process_access')
+                <a href="{{ route('admin.service-processes.index') }}"
+                   class="sub-link {{ request()->is('admin/service-processes*') ? 'active' : '' }}">
+                    <i class="fas fa-route"></i>
+                    Process Steps
+                </a>
+            @endcan
+
+        </div>
+    </div>
+@endcan
+
         <div class="nav-divider"></div>
 
         <p class="sidebar-section-title compact nav-label">Account</p>
