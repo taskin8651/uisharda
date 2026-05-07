@@ -379,6 +379,16 @@
     </div>
 @endcan 
 
+{{-- WEBSITE SETTINGS --}}
+@can('website_setting_access')
+    <a href="{{ route('admin.website-settings.edit') }}"
+       data-tooltip="Website Settings"
+       class="nav-link {{ request()->is('admin/website-settings*') ? 'active' : '' }}">
+        <i class="fas fa-cog nav-icon"></i>
+        <span class="nav-label">Website Settings</span>
+    </a>
+@endcan
+
 
         <div class="nav-divider"></div>
 

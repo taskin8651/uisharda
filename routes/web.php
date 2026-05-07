@@ -75,7 +75,12 @@ Route::resource('service-processes', 'ServiceProcessController', ['except' => ['
 Route::get('job-page', 'JobPageController@edit')->name('job-page.edit');
 Route::put('job-page', 'JobPageController@update')->name('job-page.update');
 
+
 Route::resource('jobs', 'JobController', ['except' => ['show']]);
+
+// Website Settings
+Route::get('website-settings', 'WebsiteSettingController@edit')->name('website-settings.edit');
+Route::put('website-settings', 'WebsiteSettingController@update')->name('website-settings.update');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
