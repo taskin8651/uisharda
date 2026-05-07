@@ -81,6 +81,9 @@ Route::resource('jobs', 'JobController', ['except' => ['show']]);
 // Website Settings
 Route::get('website-settings', 'WebsiteSettingController@edit')->name('website-settings.edit');
 Route::put('website-settings', 'WebsiteSettingController@update')->name('website-settings.update');
+
+// Contact Inquiries
+Route::resource('contact-inquiries', 'ContactInquiryController', ['only' => ['index', 'show', 'update', 'destroy']]);
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password
@@ -96,6 +99,9 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 Route::get('/about', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('frontend.about');
 Route::get('/industries', [App\Http\Controllers\Frontend\IndustryController::class, 'index'])->name('frontend.industries');
 Route::get('/services', [App\Http\Controllers\Frontend\ServiceController::class, 'index'])->name('frontend.services'); 
-Route::get('/jobs', [App\Http\Controllers\Frontend\JobController::class, 'index'])->name('frontend.jobs');   
+Route::get('/jobs', [App\Http\Controllers\Frontend\JobController::class, 'index'])->name('frontend.jobs');
+
+Route::get('/contact', [App\Http\Controllers\Frontend\ContactController::class, 'index'])->name('frontend.contact');
+Route::post('/contact', [App\Http\Controllers\Frontend\ContactController::class, 'store'])->name('frontend.contact.store');
 
  

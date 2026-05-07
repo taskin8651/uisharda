@@ -389,6 +389,16 @@
     </a>
 @endcan
 
+{{-- CONTACT INQUIRIES --}}
+@can('contact_inquiry_access')
+    <a href="{{ route('admin.contact-inquiries.index') }}"
+       data-tooltip="Contact Inquiries"
+       class="nav-link {{ request()->is('admin/contact-inquiries*') ? 'active' : '' }}">
+        <i class="fas fa-envelope-open-text nav-icon"></i>
+        <span class="nav-label">Contact Inquiries</span>
+    </a>
+@endcan
+
 
         <div class="nav-divider"></div>
 
