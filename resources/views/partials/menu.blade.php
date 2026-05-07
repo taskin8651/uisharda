@@ -327,6 +327,59 @@
     </div>
 @endcan
 
+{{-- JOBS CMS GROUP --}}
+@can('job_page_access')
+    @php
+        $jobActive = request()->is('admin/job-page*')
+            || request()->is('admin/jobs*');
+    @endphp
+
+    <div x-data="{ open: {{ $jobActive ? 'true' : 'false' }} }">
+
+        <button type="button"
+                @click="open = !open"
+                data-tooltip="Jobs CMS"
+                class="nav-link nav-group-btn {{ $jobActive ? 'active' : '' }}">
+
+            <div class="nav-group-left">
+                <i class="fas fa-briefcase nav-icon"></i>
+                <span class="nav-label">Jobs CMS</span>
+            </div>
+
+            <i class="fas fa-chevron-right chevron"
+               :style="open ? 'transform:rotate(90deg)' : ''"></i>
+        </button>
+
+        <div class="submenu"
+             x-show="open"
+             x-transition:enter="transition ease-out duration-150"
+             x-transition:enter-start="opacity-0 -translate-y-1"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-100"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-1">
+
+            @can('job_page_edit')
+                <a href="{{ route('admin.job-page.edit') }}"
+                   class="sub-link {{ request()->is('admin/job-page*') ? 'active' : '' }}">
+                    <i class="fas fa-file-alt"></i>
+                    Main Job Page
+                </a>
+            @endcan
+
+            @can('job_access')
+                <a href="{{ route('admin.jobs.index') }}"
+                   class="sub-link {{ request()->is('admin/jobs*') ? 'active' : '' }}">
+                    <i class="fas fa-briefcase"></i>
+                    Jobs
+                </a>
+            @endcan
+
+        </div>
+    </div>
+@endcan 
+
+
         <div class="nav-divider"></div>
 
         <p class="sidebar-section-title compact nav-label">Account</p>
