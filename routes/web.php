@@ -28,6 +28,31 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
+     /*
+    |--------------------------------------------------------------------------
+    | About Page CMS
+    |--------------------------------------------------------------------------
+    */
+
+    // Main About Page Content
+    Route::get('about-page', 'AboutPageController@edit')->name('about-page.edit');
+    Route::put('about-page', 'AboutPageController@update')->name('about-page.update');
+
+    // About Story Features
+    Route::delete('about-features/destroy', 'AboutFeatureController@massDestroy')->name('about-features.massDestroy');
+    Route::resource('about-features', 'AboutFeatureController', ['except' => ['show']]);
+
+    // About Tags
+    Route::delete('about-tags/destroy', 'AboutTagController@massDestroy')->name('about-tags.massDestroy');
+    Route::resource('about-tags', 'AboutTagController', ['except' => ['show']]);
+
+    // About Values
+    Route::delete('about-values/destroy', 'AboutValueController@massDestroy')->name('about-values.massDestroy');
+    Route::resource('about-values', 'AboutValueController', ['except' => ['show']]);
+
+    // About Processes
+    Route::delete('about-processes/destroy', 'AboutProcessController@massDestroy')->name('about-processes.massDestroy');
+    Route::resource('about-processes', 'AboutProcessController', ['except' => ['show']]);
     
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
@@ -39,4 +64,7 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
         Route::post('profile/destroy', 'ChangePasswordController@destroy')->name('password.destroyProfile');
     }
 });
+
+// Frontend Routes
+Route::get('/about', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('frontend.about');
 
