@@ -99,6 +99,8 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 });
 
 // Frontend Routes
+
+Route::get('/', [App\Http\Controllers\Frontend\IndexController::class, 'index'])->name('frontend.index');
 Route::get('/about', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('frontend.about');
 Route::get('/industries', [App\Http\Controllers\Frontend\IndustryController::class, 'index'])->name('frontend.industries');
 Route::get('/services', [App\Http\Controllers\Frontend\ServiceController::class, 'index'])->name('frontend.services'); 
