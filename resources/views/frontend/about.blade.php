@@ -2,6 +2,107 @@
 
 @section('content')
 
+<!-- ABOUT PAGE HERO -->
+<header class="hero hero-premium" style="padding: 90px 0 55px;">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <div class="container position-relative">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-8">
+        <div class="hero-badge mb-3">
+          <i class="{{ $about->hero_badge_icon ?: 'bi bi-info-circle' }}"></i>
+          {{ $about->hero_badge_text }}
+          <span class="hero-badge-dot"></span>
+        </div>
+
+        <h1 class="hero-title fw-bold lh-1 mb-3">
+          {{ $about->hero_title }}
+          <span class="hero-title-gradient">
+            {{ $about->hero_highlight }}
+          </span>
+        </h1>
+
+        <p class="hero-subtitle text-muted-2 mb-0">
+          {{ $about->hero_description }}
+        </p>
+
+        <nav aria-label="breadcrumb" class="mt-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+              <a href="{{ url('/#home') }}" class="text-decoration-none">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              {{ $about->hero_breadcrumb_title ?: 'About' }}
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card card-soft p-4">
+          <div class="fw-semibold mb-1">
+            {{ $about->hero_card_title }}
+          </div>
+
+          <div class="small text-muted-2">
+            {{ $about->hero_card_subtitle }}
+          </div>
+
+          <div class="row g-3 mt-2">
+            <div class="col-6">
+              <div class="metric">
+                <div class="fw-bold fs-4">
+                  {{ $about->hero_stat_1_value }}
+                </div>
+
+                <div class="small text-muted-2">
+                  {{ $about->hero_stat_1_label }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6">
+              <div class="metric">
+                <div class="fw-bold fs-4">
+                  {{ $about->hero_stat_2_value }}
+                </div>
+
+                <div class="small text-muted-2">
+                  {{ $about->hero_stat_2_label }}
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 bg-soft rounded-4">
+                <div class="fw-semibold">
+                  {{ $about->hero_support_title }}
+                </div>
+
+                <div class="small text-muted-2">
+                  {{ $about->hero_support_text }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          @if($about->hero_button_text)
+            <div class="d-grid mt-3">
+              <a href="{{ url($about->hero_button_link) }}" class="btn btn-hero-primary btn-lg">
+                <i class="bi bi-send"></i>
+                {{ $about->hero_button_text }}
+              </a>
+            </div>
+          @endif
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
 <!-- ABOUT STORY -->
 <section class="section about-premium">
   <div class="container">

@@ -3,34 +3,27 @@
 namespace App\Models;
 
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class AboutPage extends Model
+class IndustryPage extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'story_kicker',
-        'story_title',
-        'story_highlight',
-        'story_description',
+        'grid_eyebrow',
+        'grid_title',
+        'grid_description',
+        'grid_button_1_text',
+        'grid_button_1_link',
+        'grid_button_2_text',
+        'grid_button_2_link',
 
-        'panel_title',
-        'panel_subtitle',
-        'panel_badge',
+        'detail_eyebrow',
+        'detail_title',
+        'detail_description',
 
-        'mission_title',
-        'mission_description',
-
-        'vision_title',
-        'vision_description',
-
-        'values_kicker',
-        'values_title',
-        'values_description',
-
-        'process_kicker',
+        'process_eyebrow',
         'process_title',
         'process_description',
 

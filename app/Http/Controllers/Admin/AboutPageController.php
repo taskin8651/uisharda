@@ -43,6 +43,23 @@ class AboutPageController extends Controller
                 'cta_button_2_text' => 'View Jobs',
                 'cta_button_2_link' => '#jobs',
 
+                'hero_badge_icon' => 'bi bi-info-circle',
+'hero_badge_text' => 'About Sharda Placement',
+'hero_title' => 'Reliable manpower and recruitment support',
+'hero_highlight' => 'for growing businesses',
+'hero_description' => 'We help businesses hire verified manpower with faster shortlisting, smooth coordination and dependable follow-ups.',
+'hero_breadcrumb_title' => 'About',
+'hero_card_title' => 'Trusted Coordination',
+'hero_card_subtitle' => 'Candidate shortlisting & hiring support',
+'hero_stat_1_value' => '24–72 hrs',
+'hero_stat_1_label' => 'Shortlist time',
+'hero_stat_2_value' => 'PAN India',
+'hero_stat_2_label' => 'Hiring support',
+'hero_support_title' => 'Support',
+'hero_support_text' => 'Dedicated follow-ups from requirement to joining.',
+'hero_button_text' => 'Contact Now',
+'hero_button_link' => '/#contact',
+
                 'status' => 1,
             ]
         );
@@ -84,6 +101,23 @@ class AboutPageController extends Controller
             'cta_button_1_link',
             'cta_button_2_text',
             'cta_button_2_link',
+
+            'hero_badge_icon',
+'hero_badge_text',
+'hero_title',
+'hero_highlight',
+'hero_description',
+'hero_breadcrumb_title',
+'hero_card_title',
+'hero_card_subtitle',
+'hero_stat_1_value',
+'hero_stat_1_label',
+'hero_stat_2_value',
+'hero_stat_2_label',
+'hero_support_title',
+'hero_support_text',
+'hero_button_text',
+'hero_button_link',
         ]));
 
         $about->status = $request->has('status') ? 1 : 0;

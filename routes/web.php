@@ -53,6 +53,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // About Processes
     Route::delete('about-processes/destroy', 'AboutProcessController@massDestroy')->name('about-processes.massDestroy');
     Route::resource('about-processes', 'AboutProcessController', ['except' => ['show']]);
+
+    // Industries CMS
+Route::get('industry-page', 'IndustryPageController@edit')->name('industry-page.edit');
+Route::put('industry-page', 'IndustryPageController@update')->name('industry-page.update');
+
+Route::resource('industries', 'IndustryController', ['except' => ['show']]);
+Route::resource('industry-roles', 'IndustryRoleController', ['except' => ['show']]);
+Route::resource('industry-processes', 'IndustryProcessController', ['except' => ['show']]);
+
     
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
@@ -67,4 +76,5 @@ Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 
 
 // Frontend Routes
 Route::get('/about', [App\Http\Controllers\Frontend\AboutController::class, 'index'])->name('frontend.about');
+Route::get('/industries', [App\Http\Controllers\Frontend\IndustryController::class, 'index'])->name('frontend.industries');    
 
