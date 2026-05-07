@@ -400,6 +400,16 @@
 @endcan
 
 
+{{-- CONTACT FAQS --}}
+@can('contact_faq_access')
+    <a href="{{ route('admin.contact-faqs.index') }}"
+       data-tooltip="Contact FAQs"
+       class="nav-link {{ request()->is('admin/contact-faqs*') ? 'active' : '' }}">
+        <i class="fas fa-question-circle nav-icon"></i>
+        <span class="nav-label">Contact FAQs</span>
+    </a>
+@endcan
+
         <div class="nav-divider"></div>
 
         <p class="sidebar-section-title compact nav-label">Account</p>

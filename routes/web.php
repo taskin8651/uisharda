@@ -82,6 +82,9 @@ Route::resource('jobs', 'JobController', ['except' => ['show']]);
 Route::get('website-settings', 'WebsiteSettingController@edit')->name('website-settings.edit');
 Route::put('website-settings', 'WebsiteSettingController@update')->name('website-settings.update');
 
+// Contact FAQs
+Route::resource('contact-faqs', 'ContactFaqController', ['except' => ['show']]);
+
 // Contact Inquiries
 Route::resource('contact-inquiries', 'ContactInquiryController', ['only' => ['index', 'show', 'update', 'destroy']]);
 });

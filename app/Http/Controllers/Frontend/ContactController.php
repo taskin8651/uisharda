@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactInquiry;
 use App\Models\Industry;
 use App\Models\WebsiteSetting;
+use App\Models\ContactFaq;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+
 
 class ContactController extends Controller
 {
@@ -36,9 +38,14 @@ class ContactController extends Controller
             ->orderBy('sort_order', 'asc')
             ->get();
 
+            $faqs = ContactFaq::active()
+        ->orderBy('sort_order', 'asc')
+        ->get();
+
         return view('frontend.contact', compact(
             'websiteSetting',
-            'industries'
+            'industries',
+            'faqs'
         ));
     }
 

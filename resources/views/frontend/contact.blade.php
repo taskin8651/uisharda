@@ -50,8 +50,8 @@
               </a>
             @endif
 
-            @if($websiteSetting->whatsapp_link && $websiteSetting->whatsapp_link !== '#')
-              <a class="btn btn-hero-secondary btn-lg" href="{{ $websiteSetting->whatsapp_link }}" target="_blank">
+            @if($websiteSetting->whatsapp_number && $websiteSetting->whatsapp_number !== '#')
+              <a class="btn btn-hero-secondary btn-lg" href="{{ $websiteSetting->whatsapp_number }}" target="_blank">
                 <i class="bi bi-whatsapp"></i> WhatsApp
               </a>
             @endif
@@ -142,8 +142,8 @@
             </a>
           @endif
 
-          @if($websiteSetting->whatsapp_link && $websiteSetting->whatsapp_link !== '#')
-            <a class="contact-action-btn" href="{{ $websiteSetting->whatsapp_link }}" target="_blank">
+          @if($websiteSetting->whatsapp_number && $websiteSetting->whatsapp_number !== '#')
+            <a class="contact-action-btn" href="{{ $websiteSetting->whatsapp_number }}" target="_blank">
               <i class="bi bi-whatsapp"></i> WhatsApp
             </a>
           @endif
@@ -174,52 +174,37 @@
         @endif
 
         <!-- FAQ -->
-        <div class="mt-4">
-          <div class="fw-bold fs-5 mb-2">Quick FAQs</div>
+        @if(isset($faqs) && $faqs->count())
+    <div class="mt-4">
+        <div class="fw-bold fs-5 mb-2">Quick FAQs</div>
 
-          <div class="accordion" id="faqContact">
+        <div class="accordion" id="faqContact">
+            @foreach($faqs as $faq)
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="q{{ $faq->id }}">
+                        <button class="accordion-button {{ $loop->first ? '' : 'collapsed' }}"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#a{{ $faq->id }}"
+                                aria-expanded="{{ $loop->first ? 'true' : 'false' }}"
+                                aria-controls="a{{ $faq->id }}">
+                            {{ $faq->question }}
+                        </button>
+                    </h2>
 
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="q1">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
-                  How fast will you respond?
-                </button>
-              </h2>
-              <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1" data-bs-parent="#faqContact">
-                <div class="accordion-body text-muted-2">
-                  Within business hours. Urgent requirements can be prioritized.
+                    <div id="a{{ $faq->id }}"
+                         class="accordion-collapse collapse {{ $loop->first ? 'show' : '' }}"
+                         aria-labelledby="q{{ $faq->id }}"
+                         data-bs-parent="#faqContact">
+                        <div class="accordion-body text-muted-2">
+                            {{ $faq->answer }}
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="q2">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
-                  What should employers share in the message?
-                </button>
-              </h2>
-              <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqContact">
-                <div class="accordion-body text-muted-2">
-                  Role name, headcount, location, salary range optional and joining timeline.
-                </div>
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="q3">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
-                  Is resume mandatory for candidates?
-                </button>
-              </h2>
-              <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqContact">
-                <div class="accordion-body text-muted-2">
-                  No. You can apply without resume. Add it if available to speed up screening.
-                </div>
-              </div>
-            </div>
-
-          </div>
+            @endforeach
         </div>
+    </div>
+@endif
       </div>
 
       <!-- RIGHT: Form -->
