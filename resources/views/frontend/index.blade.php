@@ -30,12 +30,12 @@
         </p>
 
         <div class="d-flex flex-wrap gap-2">
-          <a href="#jobs" class="btn btn-hero-primary btn-lg">
+          <a href="{{ route('frontend.jobs') }}" class="btn btn-hero-primary btn-lg">
             <i class="bi bi-briefcase"></i>
             Explore Jobs
           </a>
 
-          <a href="#services" class="btn btn-hero-secondary btn-lg">
+          <a href="{{ route('frontend.services') }}" class="btn btn-hero-secondary btn-lg">
             <i class="bi bi-layers"></i>
             Our Services
           </a>
@@ -120,56 +120,66 @@
             </div>
           </div>
 
-          <!-- Search Card -->
-          <div class="hero-search card-soft p-4">
-            <div class="d-flex justify-content-between align-items-center">
-              <div>
-                <div class="fw-semibold">Quick Job Search</div>
-                <div class="small text-muted-2">Find openings by keyword & location</div>
-              </div>
-              <span class="badge text-bg-light border">Updated</span>
+        <!-- Search Card -->
+<div class="hero-search card-soft p-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <div class="fw-semibold">Quick Job Search</div>
+            <div class="small text-muted-2">Find openings by keyword & location</div>
+        </div>
+
+        <span class="badge text-bg-light border">Updated</span>
+    </div>
+
+    <form class="mt-3" method="GET" action="{{ route('frontend.jobs') }}">
+
+        <div class="mb-2">
+            <label class="form-label small">Keyword</label>
+            <div class="input-icon">
+                <i class="bi bi-search"></i>
+                <input name="title"
+                       value="{{ request('title') }}"
+                       class="form-control form-control-lg"
+                       placeholder="e.g., Driver, Helper, Accountant">
             </div>
+        </div>
 
-            <form class="mt-3">
-              <div class="mb-2">
-                <label class="form-label small">Keyword</label>
-                <div class="input-icon">
-                  <i class="bi bi-search"></i>
-                  <input class="form-control form-control-lg" placeholder="e.g., Driver, Helper, Accountant">
-                </div>
-              </div>
+        <div class="mb-2">
+            <label class="form-label small">Location</label>
+            <div class="input-icon">
+                <i class="bi bi-geo-alt"></i>
+                <input name="location"
+                       value="{{ request('location') }}"
+                       class="form-control form-control-lg"
+                       placeholder="e.g., Noida, Delhi, Gurgaon">
+            </div>
+        </div>
 
-              <div class="mb-2">
-                <label class="form-label small">Location</label>
-                <div class="input-icon">
-                  <i class="bi bi-geo-alt"></i>
-                  <input class="form-control form-control-lg" placeholder="e.g., Noida, Delhi, Gurgaon">
-                </div>
-              </div>
+        <div class="mb-3">
+            <label class="form-label small">Industry</label>
+            <select name="industry" class="form-select form-select-lg">
+                <option value="">Select industry</option>
 
-              <div class="mb-3">
-                <label class="form-label small">Industry</label>
-                <select class="form-select form-select-lg">
-                  <option selected>Select industry</option>
-                  <option>Manufacturing</option>
-                  <option>Logistics & Warehouse</option>
-                  <option>Security & Facility</option>
-                  <option>Hospitality</option>
-                  <option>Healthcare</option>
-                </select>
-              </div>
+                @foreach($industries as $industry)
+                    <option value="{{ is_object($industry) ? $industry->title : $industry }}"
+                        {{ request('industry') == (is_object($industry) ? $industry->title : $industry) ? 'selected' : '' }}>
+                        {{ is_object($industry) ? $industry->title : $industry }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-              <div class="d-grid">
-                <button type="button" class="btn btn-hero-primary btn-lg">
-                  <i class="bi bi-search"></i> Search Jobs
-                </button>
-              </div>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-hero-primary btn-lg">
+                <i class="bi bi-search"></i> Search Jobs
+            </button>
+        </div>
 
-              <div class="text-center mt-3 small text-muted-2">
-                Tip: You can also apply via <strong>Contact</strong> section below.
-              </div>
-            </form>
-          </div>
+        <div class="text-center mt-3 small text-muted-2">
+            Tip: You can also apply via <strong>Contact</strong> section below.
+        </div>
+    </form>
+</div>
 
         </div>
       </div>
